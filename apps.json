@@ -18,6 +18,21 @@
       "store": ""
     },
     {
+      "id": "genify_ai",
+      "name": "Genify Ai",
+      "icon": "https://github.com/conmangangqua/demo_app/releases/download/dev/genify_ai_icon.png",
+      "platform": "Android",
+      "description": "",
+      "features": [],
+      "downloads": {
+        "dev": "https://github.com/conmangangqua/demo_app/releases/download/dev/genify_ai_dev.apk"
+      },
+      "versions": {
+        "dev": "1.0.0+26040201"
+      },
+      "store": ""
+    },
+    {
       "id": "moo_insect_filter",
       "name": "Moo Insect Filter",
       "icon": "https://github.com/conmangangqua/demo_app/releases/download/dev/moo_insect_filter_icon.png",
