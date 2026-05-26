@@ -18,6 +18,21 @@
       "store": "https://play.google.com/store/apps/details?id=com.beat.maker.pro.learn.drumpad.beatpad"
     },
     {
+      "id": "cyan_remote_tv",
+      "name": "Cyan Remote Tv",
+      "icon": "https://github.com/conmangangqua/demo_app/releases/download/dev/cyan_remote_tv_icon.png",
+      "platform": "Android",
+      "description": "",
+      "features": [],
+      "downloads": {
+        "dev": "https://github.com/conmangangqua/demo_app/releases/download/dev/cyan_remote_tv_dev.apk"
+      },
+      "versions": {
+        "dev": "1.0.0+1"
+      },
+      "store": ""
+    },
+    {
       "id": "emu_game",
       "name": "Emu Game",
       "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/emu_game_icon.png",
