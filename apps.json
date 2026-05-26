@@ -18,6 +18,21 @@
       "store": ""
     },
     {
+      "id": "moo_insect_filter",
+      "name": "Moo Insect Filter",
+      "icon": "https://github.com/conmangangqua/demo_app/releases/download/dev/moo_insect_filter_icon.png",
+      "platform": "Android",
+      "description": "",
+      "features": [],
+      "downloads": {
+        "dev": "https://github.com/conmangangqua/demo_app/releases/download/dev/moo_insect_filter_dev.apk"
+      },
+      "versions": {
+        "dev": "1.0.0+1"
+      },
+      "store": ""
+    },
+    {
       "id": "voicepal",
       "name": "Voicepal",
       "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/voicepal_icon.png",
