@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Demo App Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-glow: rgba(5, 150, 105, 0.15);
+      --secondary: #6ee7b7;
+      --bg-main: #f0fdf4;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --text-main: #064e3b;
+      --text-muted: #14532d;
+      --glass-border: rgba(5, 150, 105, 0.1);
+      --card-radius: 100px; /* Nature Sage Style */
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-main); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+    .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: var(--bg-main); }
+    .blob { position: absolute; width: 800px; height: 800px; background: radial-gradient(circle, rgba(110, 231, 183, 0.15) 0%, transparent 70%); border-radius: 50%; animation: drift 30s infinite alternate ease-in-out; }
+    @keyframes drift { from { transform: translate(-20%, -20%) scale(1); } to { transform: translate(30%, 40%) scale(1.1); } }
+    header { padding: 90px 20px 20px; text-align: center; }
+    header h1 { font-size: clamp(3rem, 10vw, 4.5rem); font-weight: 800; opacity: 0.9; color: var(--text-main); letter-spacing: -0.05em; }
+    .search-section { max-width: 500px; margin: 40px auto 30px; padding: 0 20px; position: sticky; top: 20px; z-index: 100; }
+    .search-wrapper { position: relative; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1.5px solid var(--glass-border); border-radius: 40px; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.05); }
+    .search-wrapper input { width: 100%; background: transparent; border: none; padding: 18px 25px 18px 65px; color: var(--text-main); font-size: 1rem; font-weight: 600; outline: none; }
+    .search-wrapper::before { content: '🍃'; position: absolute; left: 24px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; }
+    main { flex: 1; width: 100%; max-width: 1440px; margin: 0 auto; padding: 20px 40px 100px; }
+    #appContainer { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 45px; }
+    .app-card { background: var(--card-bg); backdrop-filter: blur(20px); border: 2px solid var(--glass-border); border-radius: var(--card-radius); padding: 50px; display: flex; flex-direction: column; transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0; transform: scale(0.9); animation: reveal 0.8s forwards; box-shadow: 0 20px 50px rgba(5, 150, 105, 0.03); }
+    .app-card:hover { transform: scale(1.03); background: #ffffff; border-color: var(--secondary); box-shadow: 0 40px 80px -20px rgba(5, 150, 105, 0.1); }
+    .app-icon-box { width: 120px; height: 120px; margin: 0 auto 35px; border-radius: 28px; padding: 0; background: transparent; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12); display: flex; align-items: center; justify-content: center; transition: transform 0.4s ease, box-shadow 0.4s ease; overflow: hidden; }
+    .app-card:hover .app-icon-box { transform: scale(1.06); box-shadow: 0 20px 40px rgba(15, 23, 42, 0.18); }
+    .app-icon { width: 100%; height: 100%; border-radius: inherit; object-fit: cover; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 800; padding: 6px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .badge i, .badge svg { width: 14px; height: 14px; stroke-width: 2.2; }
+    .badge.ios { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: #fff; box-shadow: 0 4px 12px rgba(14,165,233,0.3); }
+    .badge.android { background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: #fff; box-shadow: 0 4px 12px rgba(22,163,74,0.3); }
+    /* Ads badge — match height + alignment với badge platform */
+    .ads-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 0.7rem; font-weight: 800; padding: 6px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1; white-space: nowrap; }
+    .ads-badge i, .ads-badge svg { width: 12px; height: 12px; stroke-width: 2.2; flex-shrink: 0; }
+    .ads-badge.has-ads { background: linear-gradient(135deg, #fb923c 0%, #f59e0b 100%); color: #fff; box-shadow: 0 4px 12px rgba(245,158,11,0.35); }
+    .ads-badge.no-ads { background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%); color: #fff; box-shadow: 0 4px 12px rgba(100,116,139,0.25); }
+    .badge-row { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; margin-bottom: 18px; overflow: hidden; }
+    .app-title { font-size: 1.8rem; font-weight: 800; text-align: center; margin-bottom: 12px; color: var(--text-main); }
+    .app-desc { font-size: 1.05rem; color: var(--text-muted); text-align: center; margin-bottom: 35px; flex-grow: 1; font-weight: 500; }
+    .app-desc:empty{display:none}
+    .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .btn { padding: 18px 12px; border-radius: 40px; font-weight: 700; font-size: 0.9rem; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.4s; }
+    .btn-dev { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; display: none !important; }
+    body.aab-authed .btn-dev { display: flex !important; }
+    .btn-live { background: var(--primary); color: #fff; box-shadow: 0 10px 20px var(--primary-glow); }
+    /* Guest mode: APK full width + hide version */
+    body:not(.aab-authed) .btn-live { grid-column: span 2; }
+    body:not(.aab-authed) .btn-stack .ver { display: none; }
+    .btn-full { grid-column: span 2; background: #f8fafc; color: #475569; border: 1px solid #e2e8f0; }
+    .btn-full:hover { background: var(--secondary); color: var(--text-main); }
+
+    .btn-stack { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; line-height: 1.1; }
+    .btn-stack .ver { font-size: 10px; font-weight: 600; opacity: 0.75; letter-spacing: 0; }
+    footer { padding: 80px 20px; text-align: center; color: var(--text-muted); font-size: 1rem; font-weight: 600; border-top: 1px solid var(--glass-border); }
+    @keyframes reveal { to { opacity: 1; transform: scale(1); } }
+    .btn-build { grid-column: span 2; background: #064e3b; color: #fff; border: 1px solid #064e3b; }
+    .btn-build:hover { background: #047857; }
+    .btn-store { grid-column: span 2; background: #16a34a; color: #fff; border: 1px solid #16a34a; text-decoration: none; }
+    .btn-store:hover { background: #15803d; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(6, 78, 59, 0.45); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: #fff; border-radius: 32px; padding: 32px 26px; width: 100%; max-width: 380px; box-shadow: 0 30px 80px rgba(5, 150, 105, 0.2); }
+    .modal h3 { font-size: 1.3rem; color: var(--text-main); margin-bottom: 4px; }
+    .modal .sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; font-weight: 600; }
+    .modal label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--text-muted); margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .modal input { width: 100%; padding: 13px 16px; border: 1.5px solid var(--glass-border); border-radius: 16px; font-family: inherit; font-size: 0.95rem; font-weight: 600; color: var(--text-main); outline: none; }
+    .modal input:focus { border-color: var(--primary); }
+    .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+    .modal-actions button { padding: 14px; border-radius: 20px; font-weight: 700; font-size: 0.9rem; border: none; cursor: pointer; font-family: inherit; }
+    .m-cancel { background: #f1f5f9; color: #475569; }
+    .m-ok { background: var(--primary); color: #fff; }
+    .m-ok:disabled { opacity: 0.55; cursor: not-allowed; }
+    .modal-status { margin-top: 16px; font-size: 0.85rem; font-weight: 600; text-align: center; min-height: 20px; word-break: break-word; }
+    .modal-status a { color: var(--primary); font-weight: 800; }
+  </style>
+  <style>/* AAB_BTNFIX4 (icon+text centered together) */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;position:relative}
+    .btn-ic{position:static;display:inline-flex;flex-shrink:0;align-items:center;justify-content:center;width:18px;height:18px;line-height:1;pointer-events:none;color:currentColor;transform:none;left:auto;top:auto}
+    .btn-ic svg{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none}
+    .btn-stack{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:auto;min-width:0}
+    .btn-stack .ver{white-space:nowrap;font-size:10px}
+    @media (max-width:480px){ .btn-stack .ver{font-size:9px} }
+    @media (max-width:600px){
+      main{padding-left:14px;padding-right:14px}
+      #appContainer{grid-template-columns:1fr;gap:20px}
+      .app-card{padding:24px}
+    }
+  </style>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <style>/* PRO_MAX_DESC_MODAL */
+    #vdOv { animation: vdFadeIn 0.25s ease-out; }
+    #vdOv.open #vdMd { animation: vdSlideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    @keyframes vdFadeIn { from { background: rgba(0,0,0,0); backdrop-filter: blur(0); } to { background: rgba(0,0,0,.55); backdrop-filter: blur(6px); } }
+    @keyframes vdSlideUp { from { transform: translateY(40px) scale(0.96); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+
+    #vdMd {
+      background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%) !important;
+      border: 1px solid rgba(124, 58, 237, 0.08) !important;
+      box-shadow: 0 50px 120px rgba(15, 23, 42, 0.35), 0 8px 24px rgba(124, 58, 237, 0.1) !important;
+    }
+    #vdMd h3 {
+      font-size: 1.55rem !important;
+      font-weight: 800 !important;
+      background: linear-gradient(135deg, #1e293b 0%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px !important;
+      letter-spacing: -0.02em;
+    }
+    #vdMd h3 i { color: #7c3aed; -webkit-text-fill-color: #7c3aed; }
+    #vdMd .s {
+      font-size: 0.95rem !important;
+      color: #475569 !important;
+      font-weight: 600;
+    }
+    #vdPlat { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #ede9fe, #f3e8ff); color: #6d28d9 !important; padding: 4px 12px !important; border-radius: 20px; font-size: 0.72rem !important; margin: 4px 0 16px !important; }
+    #vdMd .lbrow {
+      align-items: center !important;
+      padding: 4px 0 !important;
+      border-top: 1px dashed rgba(124, 58, 237, 0.08);
+      margin: 20px 0 8px !important;
+    }
+    #vdMd .lbrow:first-of-type { border-top: none; margin-top: 8px !important; }
+    #vdMd .lb {
+      display: inline-flex !important;
+      align-items: center;
+      gap: 8px !important;
+      position: relative;
+      padding-left: 14px;
+    }
+    #vdMd .lb::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 4px; height: 16px;
+      background: linear-gradient(180deg, #7c3aed 0%, #a78bfa 100%);
+      border-radius: 2px;
+    }
+    #vdMd .cp {
+      transition: transform 0.15s ease, background 0.2s ease !important;
+      box-shadow: 0 2px 6px rgba(124, 58, 237, 0.15);
+    }
+    #vdMd .cp:hover { transform: translateY(-1px); background: #ddd6fe !important; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25); }
+    #vdMd .box {
+      background: #fafbfc !important;
+      border: 1px solid #e2e8f0 !important;
+      border-left: 3px solid #c4b5fd !important;
+      transition: border-color 0.2s ease;
+    }
+    #vdMd .box:hover { border-left-color: #7c3aed !important; }
+    #vdMd .box a { transition: color 0.15s ease; }
+    #vdMd .box a:hover { color: #5b21b6 !important; }
+    #vdMd input {
+      transition: border-color 0.18s ease, box-shadow 0.18s ease !important;
+    }
+    #vdMd input:focus {
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.15) !important;
+    }
+    #vdAct button {
+      transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease !important;
+      font-size: 0.92rem !important;
+      letter-spacing: 0.01em;
+    }
+    #vdAct button:hover { transform: translateY(-1px); filter: brightness(1.05); }
+    #vdAct button:active { transform: scale(0.98); }
+    .vd-gen { box-shadow: 0 6px 16px rgba(124, 58, 237, 0.3) !important; }
+    .vd-gen:hover { box-shadow: 0 10px 24px rgba(124, 58, 237, 0.4) !important; }
+    .health-urls { animation: vdFadeIn 0.3s ease-out; }
+  </style>
+</head>
+<body>
+  <div class="bg-animation"><div class="blob"></div></div>
+  <header><h1>Demo App Hub</h1></header>
+  <section class="search-section"><div class="search-wrapper"><input type="text" id="searchInput" placeholder="Search for apps..." oninput="filterApps()"></div></section>
+  <main><div id="appContainer"></div></main>
+  <footer><p>&copy; 2026 Demo App Hub. Powered by Platinum Engine.</p></footer>
+  <script>
+    let allApps = [];
+    const formatUrl = (url, isIOS) => url && isIOS ? "itms-services://?action=download-manifest&url=" + encodeURIComponent(url) : url;
+    const renderApps = (apps) => {
+      const container = document.getElementById("appContainer"); container.innerHTML = "";
+      if (apps.length === 0) { container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 100px; color: var(--text-muted); font-weight: 700;">🍃 No apps found matching your search.</div>'; return; }
+      apps.forEach((app, index) => {
+        const isIOS = (app.platform || "").toLowerCase().includes("ios");
+        const isAndroid = !app.platform || app.platform.toLowerCase().includes("android");
+        const buildLabel = (isIOS && !isAndroid) ? "Build TestFlight" : "Build AAB";
+        const devUrl = formatUrl(app.downloads?.dev, isIOS);
+        const prodUrl = formatUrl(app.downloads?.prod, isIOS);
+        const aabUrl = app.downloads?.aab || "";
+        const storeUrl = app.store || "";
+        const v = app.versions || {};
+        const stack = (label, k) => v[k]
+          ? `<span class="btn-stack">${label}<span class="ver">v${v[k]}</span></span>`
+          : `<span class="btn-stack">${label}</span>`;
+        const card = document.createElement("article"); card.className = "app-card"; card.style.animationDelay = `${index * 0.1}s`; card.dataset.appId = app.id;
+        card.innerHTML = `<div class="app-icon-box"><img src="${app.icon || 'https://via.placeholder.com/150'}" class="app-icon" alt="${app.name}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(app.name)}&background=059669&color=fff'"></div>
+          <div class="badge-row"><span class="badge ${isIOS ? 'ios' : 'android'}"><i data-lucide="${isIOS ? 'apple' : 'smartphone'}"></i>${app.platform || 'Android'}</span><span class="ads-badge" data-ads="loading" style="display:none"></span><span class="health-badge" data-health="loading" style="display:none"></span></div>
+          <h2 class="app-title">${app.name}</h2><p class="app-desc">${app.description || ''}</p>
+          <div class="btn-grid">${devUrl ? `<a href="${devUrl}" class="btn btn-dev"><i class="btn-ic" data-lucide="wrench"></i>${stack('Dev Build','dev')}</a>` : ""} ${prodUrl ? `<a href="${prodUrl}" class="btn btn-live"><i class="btn-ic" data-lucide="${isIOS ? 'apple' : 'rocket'}"></i>${stack(isIOS ? 'Install' : 'APK','prod')}</a>` : ""} ${aabUrl ? `<a href="${aabUrl}" class="btn btn-full"><i class="btn-ic" data-lucide="package"></i>${stack('Download AAB','aab')}</a>` : ""} ${storeUrl ? `<a href="${storeUrl}" target="_blank" rel="noopener" class="btn btn-store"><i class="btn-ic" data-lucide="shopping-bag"></i><span class="btn-stack">View on Store</span></a>` : ""}
+          <button type="button" class="btn btn-build" onclick="openBuildModal('${app.id}', '${(app.name || '').replace(/'/g, "\\'")}')"><i class="btn-ic" data-lucide="hammer"></i><span class="btn-stack">${buildLabel}</span></button><button type="button" class="btn btn-gd" onclick="openViewDesc('${app.id}', '${(app.name || '').replace(/'/g, "\'")}')"><i class="btn-ic" data-lucide="file-text"></i><span class="btn-stack">Description</span></button><button type="button" class="btn btn-as" onclick="dlAssets('${app.id}', '${(app.name || '').replace(/'/g, "\'")}', this)"><i class="btn-ic" data-lucide="download"></i><span class="btn-stack">Assets</span></button></div>`;
+        container.appendChild(card);
+      });
+    };
+    const filterApps = () => {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      renderApps(allApps.filter(app => app.name.toLowerCase().includes(query) || (app.description && app.description.toLowerCase().includes(query))));
+      window.lucide && lucide.createIcons();
+    };
+    fetch("apps.json").then(res => res.json()).then(data => { allApps = data.apps || []; allApps.sort((a,b) => (b.store ? 1 : 0) - (a.store ? 1 : 0)); renderApps(allApps); window.lucide && lucide.createIcons(); runHealthCheck(); }).catch(err => { document.getElementById("appContainer").innerHTML = '<div style="color: #ef4444; font-weight: 800; text-align: center; grid-column: 1/-1;">❌ Connection error. Please try again later.</div>'; });
+
+    function escHtml(s){ return String(s||"").replace(/[&<>"']/g,function(c){return ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[c];}); }
+    function urlRow(label, url, ok){
+      if(!url) return '<div style="font-size:.7rem;color:#94a3b8">'+label+': <i>(trống)</i></div>';
+      const okBadge = ok===true ? '<span style="color:#16a34a;font-weight:700">✓</span>'
+                    : ok===false ? '<span style="color:#dc2626;font-weight:800">⚠️ HỎNG</span>'
+                    : '<span style="color:#94a3b8">?</span>';
+      const safe = escHtml(url);
+      const color = ok===false ? "#dc2626" : "#7c3aed";
+      return '<div style="font-size:.7rem;line-height:1.4;margin-top:2px"><span style="color:#64748b;font-weight:600">'+label+'</span> '+okBadge+'<br><a href="'+safe+'" target="_blank" rel="noopener" style="color:'+color+';word-break:break-all;text-decoration:underline">'+safe+'</a></div>';
+    }
+    function clearHealthUI(){
+      document.querySelectorAll(".health-badge, .ads-badge").forEach(b => { b.style.display="none"; b.textContent=""; });
+      document.querySelectorAll(".health-urls").forEach(u => u.remove());
+      document.querySelectorAll(".app-card").forEach(c => { c.style.boxShadow=""; });
+    }
+    async function runAdsCheck(){
+      if(!allApps.length) return;
+      const apps = allApps.filter(a => a.id).slice(0, 50).map(a => ({id: a.id}));
+      try{
+        const r = await fetch("https://aab-trigger.vercel.app/api/adscheck", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({apps})
+        });
+        if(!r.ok) return;
+        const data = await r.json();
+        Object.entries(data.results || {}).forEach(([appId, a]) => {
+          const card = document.querySelector('.app-card[data-app-id="'+CSS.escape(appId)+'"]');
+          if(!card) return;
+          const badge = card.querySelector('.ads-badge');
+          if(!badge) return;
+          badge.className = "ads-badge " + (a.has_ads ? "has-ads" : "no-ads");
+          badge.style.display = "inline-flex";
+          if(a.has_ads){
+
+            const sdks = (a.ads||[]).join(', ');
+
+            badge.innerHTML = '<i data-lucide="megaphone"></i>ADS';
+
+            badge.style.cursor = 'pointer';
+
+            badge.title = 'Click để xem SDK chi tiết';
+
+            badge.onclick = function(){ alert('Ads SDK: ' + sdks); };
+
+          } else {
+
+            badge.innerHTML = '<i data-lucide="ban"></i>No Ads';
+
+            badge.style.cursor = 'default';
+
+            badge.onclick = null;
+
+          }
+          window.lucide && lucide.createIcons();
+        });
+      }catch(e){}
+    }
+    async function runHealthCheck(){
+      runAdsCheck();
+      if(localStorage.getItem("aab_authed")!=="1"){ clearHealthUI(); return; }
+      if(!allApps.length) return;
+      const apps = allApps.filter(a => a.id).slice(0, 50).map(a => ({id: a.id, store_url: a.store || null}));
+      try{
+        const r = await fetch("https://aab-trigger.vercel.app/api/healthbulk", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({apps})
+        });
+        if(!r.ok) return;
+        const data = await r.json();
+        Object.entries(data.results || {}).forEach(([appId, h]) => {
+          const card = document.querySelector('.app-card[data-app-id="'+CSS.escape(appId)+'"]');
+          if(!card) return;
+          const badge = card.querySelector('.health-badge');
+          if(badge){
+            const broken = h.has_desc && (h.privacy_ok===false || h.terms_ok===false);
+            if(broken){
+              badge.style.display="inline-flex";
+              badge.style.cssText += "background:#fef2f2;color:#dc2626;font-size:.65rem;font-weight:800;padding:3px 8px;border-radius:8px;align-items:center;gap:3px;border:1px solid #fecaca";
+              const parts = [];
+              if(h.privacy_ok===false) parts.push("Privacy");
+              if(h.terms_ok===false) parts.push("Terms");
+              badge.textContent="⚠️ "+parts.join("+")+" URL 404";
+              card.style.boxShadow="0 0 0 2px #fecaca, 0 8px 20px rgba(220,38,38,.15)";
+            }
+          }
+          // Store URL 404: hide "View on Store" button + show "Update Store Link"
+          if(h.store_url && h.store_ok===false){
+            card.classList.add("store-broken");
+            const storeBtn = card.querySelector('.btn-store');
+            if(storeBtn) storeBtn.style.display="none";
+            const addBtn = card.querySelector('.btn-addstore');
+            if(addBtn){
+              addBtn.setAttribute("data-has-store","0");
+              const stack = addBtn.querySelector('.btn-stack');
+              if(stack) stack.textContent="Update Store Link (URL 404)";
+            }
+          } else if(h.store_url && h.store_ok===true){
+            card.classList.add("store-live");
+          }
+          // Chỉ inject URL block nếu CÓ URL hỏng (không hiển thị khi OK)
+          if(h.has_desc){
+            const privacyBad = h.privacy_url && h.privacy_ok===false;
+            const termsBad = h.terms_url && h.terms_ok===false;
+            const privacyMissing = !h.privacy_url;
+            const termsMissing = !h.terms_url;
+            const needShow = privacyBad || termsBad || privacyMissing || termsMissing;
+            const descEl = card.querySelector('.app-desc');
+            if(descEl && needShow && !card.querySelector('.health-urls')){
+              const wrap = document.createElement("div");
+              wrap.className="health-urls";
+              wrap.style.cssText="margin:6px 0 10px;padding:8px 10px;background:#fef2f2;border:1px solid #fecaca;border-radius:10px";
+              let html="";
+              if(privacyBad || privacyMissing) html += urlRow("Privacy", h.privacy_url, h.privacy_ok);
+              if(termsBad || termsMissing) html += urlRow("Terms", h.terms_url, h.terms_ok);
+              wrap.innerHTML = html;
+              descEl.after(wrap);
+            }
+          }
+        });
+        // Re-sort cards: store-live → có store field → store-broken → no store
+        const container = document.getElementById("appContainer");
+        const cardsToSort = Array.from(container.querySelectorAll(".app-card"));
+        cardsToSort.sort((a, b) => {
+          const score = (el) => {
+            if (el.classList.contains("store-live")) return 3;
+            if (el.classList.contains("store-broken")) return 1;
+            const id = el.dataset.appId;
+            const app = allApps.find(x => x.id === id);
+            return (app && app.store) ? 2 : 0;
+          };
+          return score(b) - score(a);
+        });
+        cardsToSort.forEach(c => container.appendChild(c));
+      }catch(e){ /* silent */ }
+    }
+    window.runHealthCheck = runHealthCheck;
+  </script>
+
+  <div class="modal-overlay" id="buildModal">
+    <div class="modal">
+      <h3 id="bmTitle"><i data-lucide="hammer" style="width:18px;height:18px;vertical-align:-3px;margin-right:6px"></i>Build</h3>
+      <p class="sub" id="bmApp"></p>
+      <label>Version Name</label>
+      <input type="text" id="bmName" placeholder="vd 1.0.1" autocomplete="off">
+      <label>Version Code</label>
+      <input type="text" id="bmCode" inputmode="numeric" placeholder="vd 26051401" autocomplete="off">
+      <label>Mã PIN</label>
+      <input type="password" id="bmPin" inputmode="numeric" placeholder="Nhập PIN" autocomplete="off">
+      <div class="modal-status" id="bmStatus"></div>
+      <div class="modal-actions">
+        <button type="button" class="m-cancel" onclick="closeBuildModal()">Huỷ</button>
+        <button type="button" class="m-ok" id="bmOk" onclick="submitBuild()">Build</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const BUILD_API = "https://aab-trigger.vercel.app";
+    let bmAppId = "";
+    const $ = (id) => document.getElementById(id);
+
+    async function openBuildModal(appId, appName) {
+      bmAppId = appId;
+      $("bmTitle").innerHTML = '<i data-lucide="hammer" style="width:18px;height:18px;vertical-align:-3px;margin-right:6px"></i>Build';
+      $("bmApp").textContent = appName + " — kích build từ xa";
+      $("bmName").value = ""; $("bmCode").value = ""; $("bmPin").value = "";
+      $("bmStatus").textContent = "Đang lấy version hiện tại...";
+      $("bmOk").disabled = true;
+      $("buildModal").classList.add("open");
+      try {
+        const r = await fetch(`${BUILD_API}/api/version?app_id=${encodeURIComponent(appId)}`);
+        const d = await r.json();
+        if (!r.ok) throw new Error(d.error || "Không lấy được version");
+        $("bmTitle").innerHTML = '<i data-lucide="hammer" style="width:18px;height:18px;vertical-align:-3px;margin-right:6px"></i>Build ' + (d.build_label || "");
+        window.lucide && lucide.createIcons();
+        $("bmApp").textContent = appName + " — " + (d.platform === "ios" ? "iOS TestFlight" : "Android AAB");
+        $("bmName").value = d.version_name || "";
+        $("bmCode").value = d.suggested_code || d.version_code || "";
+        $("bmStatus").style.color = "var(--text-muted)";
+        $("bmStatus").textContent = `Hiện tại: ${d.current_name}+${d.current_code} → đề xuất code mới: ${d.suggested_code}`;
+      } catch (e) {
+        $("bmStatus").style.color = "#ef4444";
+        $("bmStatus").textContent = "⚠️ " + e.message;
+      } finally {
+        $("bmOk").disabled = false;
+      }
+    }
+
+    function closeBuildModal() { $("buildModal").classList.remove("open"); }
+
+    async function submitBuild() {
+      const payload = {
+        app_id: bmAppId,
+        version_name: $("bmName").value.trim(),
+        version_code: $("bmCode").value.trim(),
+        pin: $("bmPin").value.trim(),
+      };
+      if (!payload.version_name || !payload.version_code || !payload.pin) {
+        $("bmStatus").style.color = "#ef4444";
+        $("bmStatus").textContent = "⚠️ Điền đủ Version Name, Code và PIN.";
+        return;
+      }
+      $("bmOk").disabled = true;
+      $("bmStatus").style.color = "var(--text-muted)";
+      $("bmStatus").textContent = "⏳ Đang kích build...";
+      try {
+        const r = await fetch(`${BUILD_API}/api/build`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const d = await r.json();
+        if (!r.ok) throw new Error(d.error || "Build thất bại");
+        $("bmStatus").style.color = "var(--primary)";
+        closeBuildModal(); showSnack("✅ " + (d.message || "Đã kích build"), d.pipeline_url, false);
+      } catch (e) {
+        $("bmStatus").style.color = "#ef4444";
+        $("bmStatus").textContent = "❌ " + e.message;
+      } finally {
+        $("bmOk").disabled = false;
+      }
+    }
+
+    $("buildModal").addEventListener("click", (e) => {
+      if (e.target.id === "buildModal") closeBuildModal();
+    });
+  </script>
+
+  <style>/* AAB_LOGIN */
+    .btn-build{display:none!important}
+    body.aab-authed .btn-build{display:flex!important}
+    #aablBtn{position:fixed;right:16px;bottom:16px;z-index:100000;background:#0f172a;color:#fff;border:none;border-radius:999px;padding:12px 18px;font:600 14px/1 system-ui,-apple-system,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer}
+    #aablOv{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100001;padding:20px}
+    #aablOv.open{display:flex}
+    #aablMd{background:#fff;border-radius:20px;padding:26px 22px;width:100%;max-width:340px;box-shadow:0 30px 80px rgba(0,0,0,.3);font-family:system-ui,-apple-system,sans-serif}
+    #aablMd h3{margin:0 0 14px;font-size:1.15rem;color:#0f172a}
+    #aablMd input{width:100%;box-sizing:border-box;padding:12px 14px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:1rem;font-weight:600;outline:none}
+    #aablMd input:focus{border-color:#0f172a}
+    #aablMsg{min-height:18px;margin-top:10px;font-size:.82rem;font-weight:600;text-align:center;color:#ef4444}
+    #aablAct{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+    #aablAct button{padding:12px;border:none;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit}
+    .aabl-cancel{background:#f1f5f9;color:#475569}
+    .aabl-ok{background:#059669;color:#fff}
+  </style>
+  <button id="aablBtn" type="button"><i data-lucide="lock-keyhole" style="width:14px;height:14px;vertical-align:-2px;margin-right:5px"></i>Đăng nhập</button>
+  <div id="aablOv"><div id="aablMd">
+    <h3><i data-lucide="lock-keyhole" style="width:18px;height:18px;vertical-align:-3px;margin-right:6px"></i>Đăng nhập Build</h3>
+    <input id="aablPin" type="password" inputmode="numeric" placeholder="Nhập mã PIN" autocomplete="off">
+    <div id="aablMsg"></div>
+    <div id="aablAct">
+      <button type="button" class="aabl-cancel" id="aablCancel">Huỷ</button>
+      <button type="button" class="aabl-ok" id="aablOk">Đăng nhập</button>
+    </div>
+  </div></div>
+  <script>(function(){
+    var API="https://aab-trigger.vercel.app", KEY="aab_authed";
+    var b=document.body,
+        btn=document.getElementById("aablBtn"),
+        ov=document.getElementById("aablOv"),
+        pin=document.getElementById("aablPin"),
+        msg=document.getElementById("aablMsg"),
+        ok=document.getElementById("aablOk"),
+        cancel=document.getElementById("aablCancel");
+    function authed(){return localStorage.getItem(KEY)==="1";}
+    function render(){ if(authed()){b.classList.add("aab-authed");btn.innerHTML='<i data-lucide="log-out" style="width:14px;height:14px;vertical-align:-2px;margin-right:5px"></i>Đăng xuất';} else {b.classList.remove("aab-authed");btn.innerHTML='<i data-lucide="lock-keyhole" style="width:14px;height:14px;vertical-align:-2px;margin-right:5px"></i>Đăng nhập';} window.lucide && lucide.createIcons(); }
+    function close(){ov.classList.remove("open");pin.value="";msg.textContent="";}
+    btn.onclick=function(){ if(authed()){ localStorage.removeItem(KEY); render(); window.runHealthCheck && window.runHealthCheck(); } else { ov.classList.add("open"); setTimeout(function(){pin.focus();},50); } };
+    cancel.onclick=close;
+    ov.addEventListener("click",function(e){ if(e.target===ov) close(); });
+    pin.addEventListener("keydown",function(e){ if(e.key==="Enter") ok.click(); });
+    ok.onclick=async function(){
+      var v=(pin.value||"").trim();
+      if(!v){ msg.style.color="#ef4444"; msg.textContent="Nhập PIN."; return; }
+      ok.disabled=true; msg.style.color="#64748b"; msg.textContent="Đang kiểm tra...";
+      try{
+        var r=await fetch(API+"/api/auth",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({pin:v})});
+        var d=await r.json();
+        if(!r.ok||!d.ok) throw new Error(d.error||"Sai mã PIN");
+        localStorage.setItem(KEY,"1"); render(); close(); window.runHealthCheck && window.runHealthCheck();
+      }catch(e){ msg.style.color="#ef4444"; msg.textContent="❌ "+e.message; }
+      finally{ ok.disabled=false; }
+    };
+    render();
+  })();</script>
+
+  <style>/* AAB_SNACK */
+    #aabSnack{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(140%);
+      max-width:92vw;width:max-content;background:#0f172a;color:#fff;padding:14px 18px;border-radius:14px;
+      font:600 14px/1.4 system-ui,-apple-system,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.35);
+      z-index:100002;opacity:0;transition:transform .35s cubic-bezier(.2,.9,.3,1),opacity .35s;
+      display:flex;align-items:center;gap:14px;text-align:left}
+    #aabSnack.show{transform:translateX(-50%) translateY(0);opacity:1}
+    #aabSnack.err{background:#b91c1c}
+    #aabSnack a{color:#6ee7b7;font-weight:800;text-decoration:none;white-space:nowrap}
+    #aabSnack .x{cursor:pointer;opacity:.7;font-weight:800}
+  </style>
+  <div id="aabSnack"></div>
+  <script>(function(){
+    var el=document.getElementById("aabSnack"), t;
+    window.showSnack=function(msg,url,isErr){
+      clearTimeout(t);
+      var link=url?(' <a href="'+url+'" target="_blank" rel="noopener">Xem pipeline ›</a>'):'';
+      el.innerHTML='<span>'+msg+link+'</span><span class="x"><i data-lucide="x" style="width:14px;height:14px;vertical-align:-2px"></i></span>';
+      window.lucide && lucide.createIcons();
+      el.className=isErr?'err show':'show';
+      el.querySelector(".x").onclick=function(){ el.classList.remove("show"); };
+      t=setTimeout(function(){ el.classList.remove("show"); }, 8000);
+    };
+  })();</script>
+
+  <style>/* AAB_GENDESC AAB_VIEWDESC */
+    .btn-gd{background:#7c3aed;color:#fff;border:1px solid #7c3aed;cursor:pointer;display:none!important}
+    .btn-gd:hover{background:#6d28d9}
+    body.aab-authed .btn-gd{display:flex!important}
+    #vdOv{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:100001;padding:24px}
+    #vdOv.open{display:flex}
+    #vdMd{background:#fff;border-radius:24px;padding:32px 36px;width:100%;max-width:960px;max-height:94vh;overflow:auto;box-shadow:0 40px 100px rgba(0,0,0,.35);font-family:system-ui,-apple-system,sans-serif}
+    #vdMd h3{margin:0 0 4px;font-size:1.4rem;color:#0f172a}
+    #vdMd .s{font-size:.92rem;color:#64748b;margin:0 0 18px;font-weight:600}
+    #vdMd .lbrow{display:flex;align-items:center;justify-content:space-between;margin:18px 0 8px}
+    #vdMd .lb{font-size:.8rem;font-weight:800;color:#7c3aed;text-transform:uppercase;letter-spacing:.05em}
+    #vdMd .cp{background:#ede9fe;color:#6d28d9;border:none;border-radius:10px;padding:8px 16px;font-size:.78rem;font-weight:800;cursor:pointer;font-family:inherit}
+    #vdMd .cp:active{transform:scale(.94)}
+    #vdMd .box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:16px 18px;font-size:.95rem;line-height:1.6;color:#0f172a;white-space:pre-wrap;word-break:break-word;max-height:55vh;overflow:auto}
+    @media(max-width:720px){
+      #vdOv{padding:12px}
+      #vdMd{padding:20px 18px;border-radius:18px}
+      #vdMd h3{font-size:1.15rem}
+      #vdMd .box{font-size:.88rem;max-height:42vh}
+    }
+    #vdMd input{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:.95rem;font-weight:600;outline:none;margin-top:16px}
+    #vdMd input:focus{border-color:#7c3aed}
+    #vdMsg{min-height:18px;margin-top:8px;font-size:.8rem;font-weight:600;text-align:center;color:#ef4444}
+    #vdAct{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+    #vdAct button{padding:12px;border:none;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit}
+    .vd-close{background:#f1f5f9;color:#475569}
+    .vd-gen{background:#7c3aed;color:#fff}
+    .vd-gen:disabled{opacity:.55;cursor:not-allowed}
+    .vd-spin{width:48px;height:48px;border:4px solid #ede9fe;border-top-color:#7c3aed;border-radius:50%;animation:vdspin .8s linear infinite}
+    @keyframes vdspin{to{transform:rotate(360deg)}}
+  </style>
+  <div id="vdOv"><div id="vdMd">
+    <h3><i data-lucide="file-text" style="width:20px;height:20px;vertical-align:-4px;margin-right:8px"></i>Store Description</h3>
+    <p class="s" id="vdApp"></p>
+    <p class="s" id="vdPlat" style="font-size:.75rem;color:#7c3aed;font-weight:700;margin:-6px 0 8px"></p>
+    <div id="vdFields">Đang tải…</div>
+    <input id="vdPin" type="password" inputmode="numeric" placeholder="Nhập PIN để Gen lại" autocomplete="off">
+    <div id="vdMsg"></div>
+    <div id="vdAct">
+      <button type="button" class="vd-close" onclick="vdClose()">Đóng</button>
+      <button type="button" class="vd-gen" id="vdGenBtn" onclick="vdGen()"><i data-lucide="refresh-cw" style="width:14px;height:14px;vertical-align:-2px;margin-right:5px"></i>Gen Description</button>
+      <button type="button" id="vdGenLegalBtn" onclick="vdGenLegal()" style="display:none;grid-column:span 2;padding:12px;border:1.5px solid #fecaca;border-radius:12px;font-weight:700;cursor:pointer;background:#fef2f2;color:#dc2626;font-family:inherit"><i data-lucide="refresh-cw" style="width:14px;height:14px;vertical-align:-2px;margin-right:5px"></i>Gen Privacy/Terms (URL hỏng)</button>
+    </div>
+  </div></div>
+  <script>(function(){
+    var API="https://aab-trigger.vercel.app", appId="";
+    var ov=document.getElementById("vdOv"),appEl=document.getElementById("vdApp"),
+        platEl=document.getElementById("vdPlat"),
+        fieldsEl=document.getElementById("vdFields"),
+        pin=document.getElementById("vdPin"),msg=document.getElementById("vdMsg"),
+        gb=document.getElementById("vdGenBtn");
+
+    // Appstore (iOS) field order + display labels + Apple char limits
+    var APPSTORE_LAYOUT=[
+      {key:"app_name",      label:"App Name",         limit:30},
+      {key:"subtitle",      label:"Subtitle",         limit:30},
+      {key:"promotional_text",label:"Promotional Text",limit:170},
+      {key:"description",   label:"Description",      limit:4000},
+      {key:"keywords",      label:"Keywords",         limit:100},
+      {key:"whats_new",     label:"What's New",       limit:4000},
+      {key:"category",      label:"Category"},
+      {key:"content_rating",label:"Content Rating"},
+      {key:"privacy_url",   label:"Privacy URL"},
+      {key:"terms_url",     label:"Terms URL"},
+      {key:"copyright",     label:"Copyright"}
+    ];
+
+    function escapeHtml(s){ return String(s||"").replace(/[&<>"']/g,function(c){return ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[c];}); }
+
+    function doCopy(text,btn){
+      function done(){ var o=btn.textContent; btn.textContent="Đã copy ✓"; setTimeout(function(){btn.textContent=o;},1500); }
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(function(){fb(text,done);});
+      } else fb(text,done);
+    }
+    function fb(t,cb){
+      var ta=document.createElement("textarea"); ta.value=t;
+      ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      try{ document.execCommand("copy"); cb(); }catch(e){} document.body.removeChild(ta);
+    }
+    // Expose for any legacy callers
+    window.vdCopy=function(kind,btn){
+      var t=(document.getElementById("vdf_"+kind)||{}).textContent||"";
+      doCopy(t,btn);
+    };
+
+    function renderRow(label, value, limit, urlStatus){
+      var len=(value||"").length;
+      var meta=limit?(" <span style=\"font-size:.7rem;color:"+(len>limit?"#ef4444":"#94a3b8")+";font-weight:600\">"+len+"/"+limit+"</span>"):"";
+      var safeLabel=escapeHtml(label);
+      var key=label.toLowerCase().replace(/[^a-z0-9]+/g,"_");
+      var trimmedVal=(value||"").trim();
+      var isUrl=/^https?:\/\//i.test(trimmedVal);
+      var safeVal;
+      var dataRaw="";
+      var statusBadge="";
+      if(isUrl){
+        var safeHref=escapeHtml(trimmedVal);
+        // URL health badge: green ✓ if 200, red ⚠ if 404/403/error
+        if(urlStatus){
+          if(urlStatus.ok){
+            statusBadge=' <span style="font-size:.7rem;color:#16a34a;font-weight:700">✓ '+urlStatus.status+'</span>';
+          } else {
+            var st=urlStatus.status?String(urlStatus.status):(urlStatus.error||"unreachable");
+            statusBadge=' <span style="font-size:.7rem;color:#ef4444;font-weight:700;background:#fef2f2;padding:2px 6px;border-radius:4px">⚠️ '+escapeHtml(st)+'</span>';
+          }
+        }
+        safeVal='<a href="'+safeHref+'" target="_blank" rel="noopener noreferrer" style="color:#7c3aed;font-weight:700;word-break:break-all;text-decoration:underline">'+safeHref+' ↗</a>';
+        dataRaw=' data-raw="'+safeHref+'"';
+      } else {
+        safeVal=escapeHtml(trimmedVal||"(trống)");
+      }
+      return '<div class="lbrow"><span class="lb">'+safeLabel+meta+statusBadge+'</span>'+
+             '<button type="button" class="cp" data-cp="'+key+'">Copy</button></div>'+
+             '<div class="box" id="vdf_'+key+'"'+dataRaw+'>'+safeVal+'</div>';
+    }
+
+    // Track current data for legal-gen UI
+    var currentDescData=null;
+    function hasBrokenUrls(d){
+      var s=d&&d.urls_status||{};
+      return ["privacy_url","terms_url"].some(function(k){
+        var f=(d.fields||{})[k];
+        return !f || (s[k] && !s[k].ok);
+      });
+    }
+
+    function renderAppstore(d){
+      platEl.textContent="🍎 Apple App Store";
+      var f=d.fields||{};
+      var s=d.urls_status||{};
+      var html="";
+      APPSTORE_LAYOUT.forEach(function(r){
+        if(!(r.key in f) && r.key!=="app_name" && r.key!=="description") return;
+        html+=renderRow(r.label, f[r.key]||"", r.limit||0, s[r.key]);
+      });
+      fieldsEl.innerHTML=html||"(Chưa có dữ liệu)";
+      attachCopy();
+      updateLegalBtn(d);
+    }
+
+    var GOOGLE_LAYOUT=[
+      {key:"app_name",          label:"Title",             limit:50},
+      {key:"short_description", label:"Short description", limit:80},
+      {key:"full_description",  label:"Long description",  limit:4000},
+      {key:"release_notes",     label:"Release notes",     limit:500},
+      {key:"category",          label:"Category"},
+      {key:"content_rating",    label:"Content Rating"},
+      {key:"privacy_url",       label:"Privacy URL"},
+      {key:"terms_url",         label:"Terms URL"},
+      {key:"copyright",         label:"Copyright"}
+    ];
+    function renderGoogle(d){
+      platEl.textContent="🤖 Google Play";
+      var f=d.fields||{};
+      var s=d.urls_status||{};
+      if(!f.short_description && d.short) f.short_description=d.short;
+      if(!f.full_description && d.long) f.full_description=d.long;
+      var html="";
+      GOOGLE_LAYOUT.forEach(function(r){
+        if(!(r.key in f) && r.key!=="short_description" && r.key!=="full_description") return;
+        html+=renderRow(r.label, f[r.key]||"", r.limit||0, s[r.key]);
+      });
+      fieldsEl.innerHTML=html||"(Chưa có dữ liệu)";
+      attachCopy();
+      updateLegalBtn(d);
+    }
+
+    function attachCopy(){
+      fieldsEl.querySelectorAll(".cp").forEach(function(b){
+        b.addEventListener("click",function(){
+          var box=document.getElementById("vdf_"+b.getAttribute("data-cp"));
+          var t=(box&&box.getAttribute("data-raw"))||(box&&box.textContent)||"";
+          doCopy(t,b);
+        });
+      });
+    }
+
+    function updateLegalBtn(d){
+      currentDescData=d;
+      var btn=document.getElementById("vdGenLegalBtn");
+      if(!btn) return;
+      if(hasBrokenUrls(d)){
+        btn.style.display="block";
+        btn.innerHTML='<i data-lucide="refresh-cw" style="width:14px;height:14px;vertical-align:-2px;margin-right:5px"></i>Gen Privacy/Terms (URL hỏng)';
+        window.lucide && lucide.createIcons();
+      } else {
+        btn.style.display="none";
+      }
+    }
+
+    window.openViewDesc=async function(id,nm){
+      appId=id; appEl.textContent=nm; pin.value=""; msg.textContent="";
+      platEl.textContent="";
+      fieldsEl.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:14px">'+
+        '<div class="vd-spin"></div>'+
+        '<div style="color:#7c3aed;font-weight:700;font-size:.92rem">Đang tải mô tả từ GitHub…</div>'+
+        '<div style="color:#94a3b8;font-size:.78rem">Đang kiểm tra Privacy/Terms URL…</div>'+
+        '</div>';
+      gb.disabled=true;
+      var lb=document.getElementById("vdGenLegalBtn"); if(lb) lb.disabled=true;
+      ov.classList.add("open");
+      try{
+        var r=await fetch(API+"/api/description?app_id="+encodeURIComponent(id));
+        var d=await r.json();
+        if(!r.ok) throw new Error(d.error||"Không tải được");
+        if(!d.exists){
+          platEl.textContent=(d.platform==="appstore"?"🍎 Apple App Store":"🤖 Google Play");
+          fieldsEl.innerHTML="<div class=\"box\">(Chưa có — bấm Gen lại để tạo)</div>";
+          return;
+        }
+        if(d.platform==="appstore") renderAppstore(d);
+        else renderGoogle(d);
+      }catch(e){ fieldsEl.innerHTML="<div class=\"box\">⚠️ "+escapeHtml(e.message)+"</div>"; }
+      finally{ gb.disabled=false; if(lb) lb.disabled=false; }
+    };
+    window.vdClose=function(){ ov.classList.remove("open"); };
+    ov.addEventListener("click",function(e){ if(e.target===ov) vdClose(); });
+    window.vdGen=async function(){
+      var v=(pin.value||"").trim();
+      if(!v){ msg.style.color="#ef4444"; msg.textContent="Nhập PIN để Gen lại."; return; }
+      gb.disabled=true; msg.style.color="#64748b"; msg.textContent="⏳ Đang kích gen…";
+      try{
+        var r=await fetch(API+"/api/gendesc",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({app_id:appId,pin:v})});
+        var d=await r.json();
+        if(!r.ok||!d.ok) throw new Error(d.error||"Thất bại");
+        vdClose();
+        if(window.showSnack) showSnack("📝 "+d.message+" (vài phút có bản mới)", d.pipeline_url, false);
+      }catch(e){ msg.style.color="#ef4444"; msg.textContent="❌ "+e.message; }
+      finally{ gb.disabled=false; }
+    };
+    window.vdGenLegal=async function(){
+      var v=(pin.value||"").trim();
+      if(!v){ msg.style.color="#ef4444"; msg.textContent="Nhập PIN để Gen Privacy/Terms."; return; }
+      var lb=document.getElementById("vdGenLegalBtn");
+      lb.disabled=true; msg.style.color="#64748b"; msg.textContent="⏳ Đang kích gen Privacy/Terms…";
+      try{
+        var r=await fetch(API+"/api/genlegal",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({app_id:appId,pin:v})});
+        var d=await r.json();
+        if(!r.ok||!d.ok) throw new Error(d.error||"Thất bại");
+        vdClose();
+        if(window.showSnack) showSnack("📄 "+d.message, d.pipeline_url, false);
+      }catch(e){ msg.style.color="#ef4444"; msg.textContent="❌ "+e.message; }
+      finally{ lb.disabled=false; }
+    };
+  })();</script>
+
+  <style>/* AAB_ASSETS */
+    .btn-as{background:#0369a1;color:#fff;border:1px solid #0369a1;cursor:pointer;display:none!important}
+    .btn-as:hover{background:#075985}
+    .btn-as:disabled{opacity:.6;cursor:progress}
+    body.aab-authed .btn-as{display:flex!important}
+  </style>
+  <script>(function(){
+    var API="https://aab-trigger.vercel.app";
+    window.dlAssets=async function(id,nm,btn){
+      var old=btn.innerHTML; btn.disabled=true; btn.innerHTML="⏳ Đang tải asset…";
+      try{
+        var r=await fetch(API+"/api/assets?app_id="+encodeURIComponent(id));
+        if(!r.ok){ var e={}; try{e=await r.json();}catch(_){} throw new Error(e.error||("HTTP "+r.status)); }
+        var cnt=r.headers.get("X-Asset-Count")||"";
+        var blob=await r.blob();
+        var url=URL.createObjectURL(blob);
+        var a=document.createElement("a");
+        a.href=url; a.download=id+"_assets.zip";
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function(){URL.revokeObjectURL(url);},4000);
+        if(window.showSnack) showSnack("⬇️ Đã tải "+(cnt?cnt+" ":"")+"asset của "+nm,"",false);
+      }catch(e){
+        if(window.showSnack) showSnack("❌ "+e.message,"",true);
+        else alert("Lỗi: "+e.message);
+      }finally{ btn.disabled=false; btn.innerHTML=old; }
+    };
+  })();</script>
+  <style>/* STORE_ADD */
+    .btn-addstore{display:none!important}
+    body.aab-authed .btn-addstore[data-has-store="0"]{display:flex!important;grid-column:span 2;background:#2563eb;color:#fff;border:1px solid #2563eb;cursor:pointer;font-family:inherit}
+    body.aab-authed .btn-addstore[data-has-store="0"]:hover{background:#1d4ed8}
+    #stOv{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100001;padding:20px}
+    #stOv.open{display:flex}
+    #stMd{background:#fff;border-radius:20px;padding:26px 22px;width:100%;max-width:380px;box-shadow:0 30px 80px rgba(0,0,0,.3);font-family:system-ui,-apple-system,sans-serif}
+    #stMd h3{margin:0 0 4px;font-size:1.15rem;color:#0f172a}
+    #stMd .sub{font-size:.82rem;color:#64748b;margin:0 0 16px;font-weight:600}
+    #stMd label{display:block;font-size:.72rem;font-weight:700;color:#64748b;margin:12px 0 6px;text-transform:uppercase;letter-spacing:.03em}
+    #stMd input{width:100%;box-sizing:border-box;padding:12px 14px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:.95rem;font-weight:600;color:#0f172a;outline:none}
+    #stMd input:focus{border-color:#2563eb}
+    #stMsg{min-height:18px;margin-top:10px;font-size:.82rem;font-weight:600;text-align:center;color:#ef4444}
+    #stAct{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+    #stAct button{padding:12px;border:none;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit}
+    .st-cancel{background:#f1f5f9;color:#475569}
+    .st-ok{background:#2563eb;color:#fff}
+    .st-ok:disabled{opacity:.55;cursor:not-allowed}
+  </style>
+  <div id="stOv"><div id="stMd">
+    <h3><i data-lucide="plus" style="width:20px;height:20px;vertical-align:-4px;margin-right:8px"></i>Add Store Link</h3>
+    <p class="sub" id="stApp"></p>
+    <label>Store URL (Google Play / App Store)</label>
+    <input id="stUrl" type="url" placeholder="https://play.google.com/store/apps/details?id=..." autocomplete="off">
+    <label>Mã PIN</label>
+    <input id="stPin" type="password" inputmode="numeric" placeholder="Nhập PIN" autocomplete="off">
+    <div id="stMsg"></div>
+    <div id="stAct"><button type="button" class="st-cancel" onclick="stClose()">Huỷ</button><button type="button" class="st-ok" id="stOk" onclick="stSubmit()">Lưu</button></div>
+  </div></div>
+  <script>(function(){
+    var API="https://aab-trigger.vercel.app", appId="";
+    function repo(){
+      var im=document.querySelector('img[src*="github.com/conmangangqua/"]');
+      var m=im&&im.src&&im.src.match(/conmangangqua\/([A-Za-z0-9_-]+)/);
+      if(m) return m[1];
+      var a=document.querySelector('a[href*="github.com/conmangangqua/"]');
+      var m2=a&&a.href.match(/conmangangqua\/([A-Za-z0-9_-]+)/);
+      return m2?m2[1]:"";
+    }
+    window.openStoreModal=async function(id,nm){
+      appId=id;
+      var appEl=document.getElementById('stApp');
+      var urlIn=document.getElementById('stUrl');
+      var pinIn=document.getElementById('stPin');
+      var msg=document.getElementById('stMsg');
+      appEl.textContent=nm+" — dán link store";
+      urlIn.value=""; pinIn.value=""; msg.textContent="";
+      msg.style.color="#64748b";
+      msg.textContent="⏳ Đang dò package…";
+      document.getElementById('stOv').classList.add('open');
+      try{
+        var r=await fetch("https://aab-trigger.vercel.app/api/package?app_id="+encodeURIComponent(id));
+        var d=await r.json();
+        if(d.suggest_url){
+          urlIn.value=d.suggest_url;
+          if(d.platform==="android"){
+            msg.style.color="#16a34a";
+            msg.textContent="✓ Auto-suggest từ package: "+d.package_id;
+            // Focus end of input so user can edit nếu cần
+            setTimeout(function(){ urlIn.focus(); urlIn.setSelectionRange(urlIn.value.length, urlIn.value.length); }, 50);
+          } else if(d.platform==="ios"){
+            msg.style.color="#7c3aed";
+            msg.textContent="🍎 Nhập ID số App Store (bundle: "+(d.package_id||"")+") vào cuối link";
+            setTimeout(function(){ urlIn.focus(); urlIn.setSelectionRange(urlIn.value.length, urlIn.value.length); }, 50);
+          }
+        } else {
+          msg.textContent="";
+        }
+      }catch(e){ msg.textContent=""; }
+    };
+    window.stClose=function(){ document.getElementById('stOv').classList.remove('open'); };
+    document.getElementById('stOv').addEventListener('click',function(e){ if(e.target.id==='stOv') stClose(); });
+    window.stSubmit=async function(){
+      var url=document.getElementById('stUrl').value.trim(), pin=document.getElementById('stPin').value.trim(), msg=document.getElementById('stMsg'), ok=document.getElementById('stOk');
+      if(!url||!pin){ msg.style.color='#ef4444'; msg.textContent='Điền link và PIN.'; return; }
+      ok.disabled=true; msg.style.color='#64748b'; msg.textContent='⏳ Đang lưu...';
+      try{
+        var r=await fetch(API+"/api/store",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({repo:repo(),app_id:appId,url:url,pin:pin})});
+        var d=await r.json();
+        if(!r.ok||!d.ok) throw new Error(d.error||"Thất bại");
+        stClose();
+        if(window.showSnack) showSnack("🛒 "+d.message,"",false); else alert(d.message);
+      }catch(e){ msg.style.color='#ef4444'; msg.textContent='❌ '+e.message; }
+      finally{ ok.disabled=false; }
+    };
+  })();</script>
+</body>
+</html>
