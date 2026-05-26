@@ -12,38 +12,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #059669;
-      --primary-glow: rgba(5, 150, 105, 0.15);
-      --secondary: #6ee7b7;
-      --bg-main: #f0fdf4;
+      --primary: #0d9488;
+      --primary-glow: rgba(13, 148, 136, 0.15);
+      --secondary: #5eead4;
+      --bg-main: #f0fdfa;
       --card-bg: rgba(255, 255, 255, 0.9);
-      --text-main: #064e3b;
-      --text-muted: #14532d;
-      --glass-border: rgba(5, 150, 105, 0.1);
+      --text-main: #134e4a;
+      --text-muted: #134e4a;
+      --glass-border: rgba(13, 148, 136, 0.1);
       --card-radius: 100px; /* Nature Sage Style */
     }
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-main); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
     .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: var(--bg-main); }
-    .blob { position: absolute; width: 800px; height: 800px; background: radial-gradient(circle, rgba(110, 231, 183, 0.15) 0%, transparent 70%); border-radius: 50%; animation: drift 30s infinite alternate ease-in-out; }
+    .blob { position: absolute; width: 800px; height: 800px; background: radial-gradient(circle, rgba(94, 234, 212, 0.15) 0%, transparent 70%); border-radius: 50%; animation: drift 30s infinite alternate ease-in-out; }
     @keyframes drift { from { transform: translate(-20%, -20%) scale(1); } to { transform: translate(30%, 40%) scale(1.1); } }
     header { padding: 90px 20px 20px; text-align: center; }
-    header h1 { font-size: clamp(3rem, 10vw, 4.5rem); font-weight: 800; opacity: 0.9; color: var(--text-main); letter-spacing: -0.05em; }
+    header h1 { font-size: clamp(3rem, 10vw, 4.5rem); font-weight: 800; opacity: 0.95; background: linear-gradient(135deg, #0f766e 0%, #14b8a6 50%, #2dd4bf 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.05em; }
     .search-section { max-width: 500px; margin: 40px auto 30px; padding: 0 20px; position: sticky; top: 20px; z-index: 100; }
-    .search-wrapper { position: relative; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1.5px solid var(--glass-border); border-radius: 40px; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.05); }
+    .search-wrapper { position: relative; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1.5px solid var(--glass-border); border-radius: 40px; box-shadow: 0 10px 30px rgba(13, 148, 136, 0.05); }
     .search-wrapper input { width: 100%; background: transparent; border: none; padding: 18px 25px 18px 65px; color: var(--text-main); font-size: 1rem; font-weight: 600; outline: none; }
     .search-wrapper::before { content: '🍃'; position: absolute; left: 24px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; }
     main { flex: 1; width: 100%; max-width: 1440px; margin: 0 auto; padding: 20px 40px 100px; }
     #appContainer { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 45px; }
-    .app-card { background: var(--card-bg); backdrop-filter: blur(20px); border: 2px solid var(--glass-border); border-radius: var(--card-radius); padding: 50px; display: flex; flex-direction: column; transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0; transform: scale(0.9); animation: reveal 0.8s forwards; box-shadow: 0 20px 50px rgba(5, 150, 105, 0.03); }
-    .app-card:hover { transform: scale(1.03); background: #ffffff; border-color: var(--secondary); box-shadow: 0 40px 80px -20px rgba(5, 150, 105, 0.1); }
+    .app-card { background: var(--card-bg); backdrop-filter: blur(20px); border: 2px solid var(--glass-border); border-radius: var(--card-radius); padding: 50px; display: flex; flex-direction: column; transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0; transform: scale(0.9); animation: reveal 0.8s forwards; box-shadow: 0 20px 50px rgba(13, 148, 136, 0.03); }
+    .app-card:hover { transform: scale(1.03); background: #ffffff; border-color: var(--secondary); box-shadow: 0 40px 80px -20px rgba(13, 148, 136, 0.1); }
     .app-icon-box { width: 120px; height: 120px; margin: 0 auto 35px; border-radius: 28px; padding: 0; background: transparent; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12); display: flex; align-items: center; justify-content: center; transition: transform 0.4s ease, box-shadow 0.4s ease; overflow: hidden; }
     .app-card:hover .app-icon-box { transform: scale(1.06); box-shadow: 0 20px 40px rgba(15, 23, 42, 0.18); }
     .app-icon { width: 100%; height: 100%; border-radius: inherit; object-fit: cover; }
     .badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 800; padding: 6px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.04em; }
     .badge i, .badge svg { width: 14px; height: 14px; stroke-width: 2.2; }
     .badge.ios { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: #fff; box-shadow: 0 4px 12px rgba(14,165,233,0.3); }
-    .badge.android { background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: #fff; box-shadow: 0 4px 12px rgba(22,163,74,0.3); }
+    .badge.android { background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%); color: #fff; box-shadow: 0 4px 12px rgba(22,163,74,0.3); }
     /* Ads badge — match height + alignment với badge platform */
     .ads-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 0.7rem; font-weight: 800; padding: 6px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1; white-space: nowrap; }
     .ads-badge i, .ads-badge svg { width: 12px; height: 12px; stroke-width: 2.2; flex-shrink: 0; }
@@ -55,7 +55,7 @@
     .app-desc:empty{display:none}
     .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
     .btn { padding: 18px 12px; border-radius: 40px; font-weight: 700; font-size: 0.9rem; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.4s; }
-    .btn-dev { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; display: none !important; }
+    .btn-dev { background: #f0fdfa; color: #0f766e; border: 1px solid #ccfbf1; display: none !important; }
     body.aab-authed .btn-dev { display: flex !important; }
     .btn-live { background: var(--primary); color: #fff; box-shadow: 0 10px 20px var(--primary-glow); }
     /* Guest mode: APK full width + hide version */
@@ -68,13 +68,13 @@
     .btn-stack .ver { font-size: 10px; font-weight: 600; opacity: 0.75; letter-spacing: 0; }
     footer { padding: 80px 20px; text-align: center; color: var(--text-muted); font-size: 1rem; font-weight: 600; border-top: 1px solid var(--glass-border); }
     @keyframes reveal { to { opacity: 1; transform: scale(1); } }
-    .btn-build { grid-column: span 2; background: #064e3b; color: #fff; border: 1px solid #064e3b; }
-    .btn-build:hover { background: #047857; }
-    .btn-store { grid-column: span 2; background: #16a34a; color: #fff; border: 1px solid #16a34a; text-decoration: none; }
-    .btn-store:hover { background: #15803d; }
-    .modal-overlay { position: fixed; inset: 0; background: rgba(6, 78, 59, 0.45); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+    .btn-build { grid-column: span 2; background: #134e4a; color: #fff; border: 1px solid #134e4a; }
+    .btn-build:hover { background: #0f766e; }
+    .btn-store { grid-column: span 2; background: #14b8a6; color: #fff; border: 1px solid #14b8a6; text-decoration: none; }
+    .btn-store:hover { background: #0d9488; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(19, 78, 74, 0.45); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
     .modal-overlay.open { display: flex; }
-    .modal { background: #fff; border-radius: 32px; padding: 32px 26px; width: 100%; max-width: 380px; box-shadow: 0 30px 80px rgba(5, 150, 105, 0.2); }
+    .modal { background: #fff; border-radius: 32px; padding: 32px 26px; width: 100%; max-width: 380px; box-shadow: 0 30px 80px rgba(13, 148, 136, 0.2); }
     .modal h3 { font-size: 1.3rem; color: var(--text-main); margin-bottom: 4px; }
     .modal .sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; font-weight: 600; }
     .modal label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--text-muted); margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 0.03em; }
@@ -229,7 +229,7 @@
     function escHtml(s){ return String(s||"").replace(/[&<>"']/g,function(c){return ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[c];}); }
     function urlRow(label, url, ok){
       if(!url) return '<div style="font-size:.7rem;color:#94a3b8">'+label+': <i>(trống)</i></div>';
-      const okBadge = ok===true ? '<span style="color:#16a34a;font-weight:700">✓</span>'
+      const okBadge = ok===true ? '<span style="color:#14b8a6;font-weight:700">✓</span>'
                     : ok===false ? '<span style="color:#dc2626;font-weight:800">⚠️ HỎNG</span>'
                     : '<span style="color:#94a3b8">?</span>';
       const safe = escHtml(url);
@@ -470,7 +470,7 @@
     #aablAct{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
     #aablAct button{padding:12px;border:none;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit}
     .aabl-cancel{background:#f1f5f9;color:#475569}
-    .aabl-ok{background:#059669;color:#fff}
+    .aabl-ok{background:#0d9488;color:#fff}
   </style>
   <button id="aablBtn" type="button"><i data-lucide="lock-keyhole" style="width:14px;height:14px;vertical-align:-2px;margin-right:5px"></i>Đăng nhập</button>
   <div id="aablOv"><div id="aablMd">
@@ -521,7 +521,7 @@
       display:flex;align-items:center;gap:14px;text-align:left}
     #aabSnack.show{transform:translateX(-50%) translateY(0);opacity:1}
     #aabSnack.err{background:#b91c1c}
-    #aabSnack a{color:#6ee7b7;font-weight:800;text-decoration:none;white-space:nowrap}
+    #aabSnack a{color:#5eead4;font-weight:800;text-decoration:none;white-space:nowrap}
     #aabSnack .x{cursor:pointer;opacity:.7;font-weight:800}
   </style>
   <div id="aabSnack"></div>
@@ -640,7 +640,7 @@
         // URL health badge: green ✓ if 200, red ⚠ if 404/403/error
         if(urlStatus){
           if(urlStatus.ok){
-            statusBadge=' <span style="font-size:.7rem;color:#16a34a;font-weight:700">✓ '+urlStatus.status+'</span>';
+            statusBadge=' <span style="font-size:.7rem;color:#14b8a6;font-weight:700">✓ '+urlStatus.status+'</span>';
           } else {
             var st=urlStatus.status?String(urlStatus.status):(urlStatus.error||"unreachable");
             statusBadge=' <span style="font-size:.7rem;color:#ef4444;font-weight:700;background:#fef2f2;padding:2px 6px;border-radius:4px">⚠️ '+escapeHtml(st)+'</span>';
@@ -869,7 +869,7 @@
         if(d.suggest_url){
           urlIn.value=d.suggest_url;
           if(d.platform==="android"){
-            msg.style.color="#16a34a";
+            msg.style.color="#14b8a6";
             msg.textContent="✓ Auto-suggest từ package: "+d.package_id;
             // Focus end of input so user can edit nếu cần
             setTimeout(function(){ urlIn.focus(); urlIn.setSelectionRange(urlIn.value.length, urlIn.value.length); }, 50);
