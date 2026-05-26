@@ -1,6 +1,21 @@
 {
   "apps": [
     {
+      "id": "beat_maker",
+      "name": "Beat Maker",
+      "icon": "https://github.com/conmangangqua/demo_app/releases/download/dev/beat_maker_icon.png",
+      "platform": "Android",
+      "description": "",
+      "features": [],
+      "downloads": {
+        "dev": "https://github.com/conmangangqua/demo_app/releases/download/dev/beat_maker_dev.apk"
+      },
+      "versions": {
+        "dev": "1.0.4+104"
+      },
+      "store": ""
+    },
+    {
       "id": "voicepal",
       "name": "Voicepal",
       "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/voicepal_icon.png",
