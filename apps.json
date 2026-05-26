@@ -1,3 +1,19 @@
 {
-  "apps": []
+  "apps": [
+    {
+      "id": "zentide_sleep_tracker",
+      "name": "Zentide Sleep Tracker",
+      "icon": "https://github.com/conmangangqua/demo_app/releases/download/dev/zentide_sleep_tracker_icon.png",
+      "platform": "Android",
+      "description": "",
+      "features": [],
+      "downloads": {
+        "dev": "https://github.com/conmangangqua/demo_app/releases/download/dev/zentide_sleep_tracker_dev.apk"
+      },
+      "versions": {
+        "dev": "1.2.0+50"
+      },
+      "store": ""
+    }
+  ]
 }
