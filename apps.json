@@ -88,7 +88,7 @@
     {
       "id": "ling_ai",
       "name": "Ling Ai",
-      "icon": "https://github.com/conmangangqua/demo_app/releases/download/dev/ling_ai_icon.png",
+      "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/ling_ai_icon.png",
       "platform": "Android",
       "description": "",
       "features": [],
