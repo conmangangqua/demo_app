@@ -48,8 +48,7 @@
         "prod": "https://github.com/conmangangqua/demo_app/releases/download/prod/emu_game_prod.plist"
       },
       "versions": {
-        "dev": "1.0.0+1",
-        "prod": "1.0.0+1"
+        "dev": "1.0.0+1"
       },
       "store": ""
     },
@@ -116,7 +115,6 @@
         "prod": "https://github.com/conmangangqua/demo_app/releases/download/prod/voicepal_prod.apk"
       },
       "versions": {
-        "dev": "1.0.0+1",
         "prod": "1.0.0+1"
       },
       "store": ""
