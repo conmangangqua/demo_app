@@ -31,7 +31,6 @@
       },
       "versions": {
         "dev": "1.0.0+1",
-        "prod": "1.0.0+1",
         "noads": "1.0.0+1"
       },
       "store": ""
@@ -48,8 +47,7 @@
         "prod": "https://github.com/conmangangqua/demo_app/releases/download/prod/emu_game_prod.plist"
       },
       "versions": {
-        "dev": "1.0.0+1",
-        "prod": "1.0.0+1"
+        "dev": "1.0.0+1"
       },
       "store": ""
     },
@@ -82,7 +80,6 @@
         "prod": "https://github.com/conmangangqua/demo_app/releases/download/prod/moo_insect_filter_prod.apk"
       },
       "versions": {
-        "dev": "1.0.0+1",
         "prod": "1.0.0+1"
       },
       "store": ""
@@ -115,10 +112,7 @@
         "dev": "https://github.com/conmangangqua/demo_app/releases/download/dev/voicepal_dev.apk",
         "prod": "https://github.com/conmangangqua/demo_app/releases/download/prod/voicepal_prod.apk"
       },
-      "versions": {
-        "dev": "1.0.0+1",
-        "prod": "1.0.0+1"
-      },
+      "versions": {},
       "store": ""
     },
     {
@@ -133,7 +127,6 @@
         "prod": "https://github.com/conmangangqua/demo_app/releases/download/prod/zentide_sleep_tracker_prod.apk"
       },
       "versions": {
-        "dev": "1.2.0+50",
         "prod": "1.2.0+50"
       },
       "store": "https://play.google.com/store/apps/details?id=com.tmt.sleeptracker"
