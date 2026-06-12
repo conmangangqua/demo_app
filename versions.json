@@ -1,0 +1,15 @@
+{
+  "generated_at": "2026-06-12T21:41:37",
+  "apps": {
+    "beat_maker": {
+      "updated_on": "May 11, 2026",
+      "updated_ts": 1778491195,
+      "package_id": "com.beat.maker.pro.learn.drumpad.beatpad"
+    },
+    "zentide_sleep_tracker": {
+      "updated_on": "Jul 30, 2025",
+      "updated_ts": null,
+      "package_id": "com.tmt.sleeptracker"
+    }
+  }
+}
