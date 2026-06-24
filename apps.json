@@ -107,7 +107,7 @@
     {
       "id": "voicepal",
       "name": "Voicepal",
-      "icon": "https://github.com/conmangangqua/demo_app/releases/download/dev/voicepal_icon.png",
+      "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/voicepal_icon.png",
       "platform": "Android",
       "description": "",
       "features": [],
