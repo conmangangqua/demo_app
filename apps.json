@@ -1,6 +1,21 @@
 {
   "apps": [
     {
+      "id": "aegis_vpn",
+      "name": "Aegis Vpn",
+      "icon": "https://github.com/conmangangqua/demo_app/releases/download/dev/aegis_vpn_icon.png",
+      "platform": "Android",
+      "description": "",
+      "features": [],
+      "downloads": {
+        "dev": "https://github.com/conmangangqua/demo_app/releases/download/dev/aegis_vpn_dev.apk"
+      },
+      "versions": {
+        "dev": "1.0.0+26061001"
+      },
+      "store": ""
+    },
+    {
       "id": "beat_maker",
       "name": "Beat Maker",
       "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/beat_maker_icon.png",
