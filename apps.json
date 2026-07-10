@@ -19,7 +19,7 @@
     },
     {
       "id": "beat_maker",
-      "name": "Beat Maker",
+      "name": "Beat Maker Pro: Learn Drum Pad",
       "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/beat_maker_icon.png",
       "platform": "Android",
       "description": "",
@@ -140,7 +140,7 @@
     },
     {
       "id": "zentide_sleep_tracker",
-      "name": "Zentide Sleep Tracker",
+      "name": "Zentide: Sleep Sound &Recorder",
       "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/zentide_sleep_tracker_icon.png",
       "platform": "Android",
       "description": "",
