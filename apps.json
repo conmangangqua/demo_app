@@ -3,7 +3,7 @@
     {
       "id": "aegis_vpn",
       "name": "Aegis Vpn",
-      "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/aegis_vpn_icon.png",
+      "icon": "icons/aegis_vpn.webp",
       "platform": "Android",
       "description": "",
       "features": [],
@@ -20,7 +20,7 @@
     {
       "id": "beat_maker",
       "name": "Beat Maker Pro: Learn Drum Pad",
-      "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/beat_maker_icon.png",
+      "icon": "icons/beat_maker.webp",
       "platform": "Android",
       "description": "",
       "features": [],
@@ -37,7 +37,7 @@
     {
       "id": "cyan_remote_tv",
       "name": "Cyan Remote Tv",
-      "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/cyan_remote_tv_icon.png",
+      "icon": "icons/cyan_remote_tv.webp",
       "platform": "Android",
       "description": "",
       "features": [],
@@ -56,7 +56,7 @@
     {
       "id": "emu_game",
       "name": "Emu Game",
-      "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/emu_game_icon.png",
+      "icon": "icons/emu_game.webp",
       "platform": "iOS",
       "description": "",
       "features": [],
@@ -73,7 +73,7 @@
     {
       "id": "geosnap",
       "name": "Geosnap",
-      "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/geosnap_icon.png",
+      "icon": "icons/geosnap.webp",
       "platform": "Android",
       "description": "",
       "features": [],
@@ -90,7 +90,7 @@
     {
       "id": "moo_insect_filter",
       "name": "Moo Insect Filter",
-      "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/moo_insect_filter_icon.png",
+      "icon": "icons/moo_insect_filter.webp",
       "platform": "Android",
       "description": "",
       "features": [],
@@ -107,7 +107,7 @@
     {
       "id": "restorex",
       "name": "Restorex",
-      "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/restorex_icon.png",
+      "icon": "icons/restorex.webp",
       "platform": "Android",
       "description": "",
       "features": [],
@@ -124,7 +124,7 @@
     {
       "id": "voicepal",
       "name": "Voicepal",
-      "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/voicepal_icon.png",
+      "icon": "icons/voicepal.webp",
       "platform": "Android",
       "description": "",
       "features": [],
@@ -141,7 +141,7 @@
     {
       "id": "zentide_sleep_tracker",
       "name": "Zentide: Sleep Sound &Recorder",
-      "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/zentide_sleep_tracker_icon.png",
+      "icon": "icons/zentide_sleep_tracker.webp",
       "platform": "Android",
       "description": "",
       "features": [],
