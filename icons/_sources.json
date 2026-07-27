@@ -1,0 +1,38 @@
+{
+  "aegis_vpn": {
+    "sha": "9104b8c648341963b2d6b44e4cc6710ccee79ac61a4c837aaf4d40d6ad10b98a",
+    "src": "https://github.com/conmangangqua/demo_app/releases/download/prod/aegis_vpn_icon.png"
+  },
+  "beat_maker": {
+    "sha": "4eef9639b7371f0afc4d2b705c113d4c160de47f337ffa3de905c5dabc91b9b3",
+    "src": "https://github.com/conmangangqua/demo_app/releases/download/prod/beat_maker_icon.png"
+  },
+  "cyan_remote_tv": {
+    "sha": "65567ca67eab72b152aa80eab76d64b4ea54e03e28155e05f13664c8b31bed7c",
+    "src": "https://github.com/conmangangqua/demo_app/releases/download/prod/cyan_remote_tv_icon.png"
+  },
+  "emu_game": {
+    "sha": "f98eb878a6f99513a2ddc43d1f319d0c053900b3b24c24e8a82bf096ad961f31",
+    "src": "https://github.com/conmangangqua/demo_app/releases/download/prod/emu_game_icon.png"
+  },
+  "geosnap": {
+    "sha": "8ae0152c9cd893f70702bae48745033ceb6f003bfe609c5dd410fd7d548cb5b5",
+    "src": "https://github.com/conmangangqua/demo_app/releases/download/prod/geosnap_icon.png"
+  },
+  "moo_insect_filter": {
+    "sha": "58974b399773832ce99e54fa1e915c40ce0173fd01628d5530dfc7f522d283d5",
+    "src": "https://github.com/conmangangqua/demo_app/releases/download/prod/moo_insect_filter_icon.png"
+  },
+  "restorex": {
+    "sha": "d59ade22a9a8af72f09a4ed46f5f154ec4fb65b04c21bd1323571cd501610d0c",
+    "src": "https://github.com/conmangangqua/demo_app/releases/download/prod/restorex_icon.png"
+  },
+  "voicepal": {
+    "sha": "4ba7e04d3fb2739e8087bcd13f3834382ddf6bf3c366d4e91622830aba8879d1",
+    "src": "https://github.com/conmangangqua/demo_app/releases/download/prod/voicepal_icon.png"
+  },
+  "zentide_sleep_tracker": {
+    "sha": "1e544f0863616f4fcc8a54c43fec79381fcee158a449b3dc4bc446422926d137",
+    "src": "https://github.com/conmangangqua/demo_app/releases/download/prod/zentide_sleep_tracker_icon.png"
+  }
+}
