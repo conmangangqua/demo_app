@@ -154,7 +154,7 @@
       },
       "versions": {
         "dev": "1.2.1+26072901",
-        "prod": "1.2.0+50",
+        "prod": "1.2.1+26072901",
         "aab": "1.2.1+26072901"
       },
       "store": "https://play.google.com/store/apps/details?id=com.tmt.sleeptracker"
