@@ -37,6 +37,10 @@
     main { flex: 1; width: 100%; max-width: 1800px; margin: 0 auto; padding: 20px 40px 100px; }
     #appContainer { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 45px; }
     .app-card { background: var(--card-bg); backdrop-filter: blur(20px); border: 2px solid var(--glass-border); border-radius: var(--card-radius); padding: 50px; display: flex; flex-direction: column; transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0; transform: scale(0.9); animation: reveal 0.8s forwards; box-shadow: 0 20px 50px rgba(13, 148, 136, 0.03); }
+    .app-desc{min-height:42px}
+    .badge-row{min-height:34px}
+    /* ANTI_FLICKER ②: giữ sẵn chỗ cho mô tả + badge (đổ về sau qua API) để
+       card không cao lên giữa chừng gây giật. */
     .app-card:hover { transform: scale(1.03); background: #ffffff; border-color: var(--secondary); box-shadow: 0 40px 80px -20px rgba(13, 148, 136, 0.1); }
     .app-icon-box { width: 120px; height: 120px; margin: 0 auto 35px; border-radius: 28px; padding: 0; background: transparent; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12); display: flex; align-items: center; justify-content: center; transition: transform 0.4s ease, box-shadow 0.4s ease; overflow: hidden; }
     .app-card:hover .app-icon-box { transform: scale(1.06); box-shadow: 0 20px 40px rgba(15, 23, 42, 0.18); }
@@ -222,7 +226,7 @@
         const stack = (label, k) => v[k]
           ? `<span class="btn-stack">${label}<span class="ver">v${v[k]}</span></span>`
           : `<span class="btn-stack">${label}</span>`;
-        const card = document.createElement("article"); card.className = "app-card"; card.style.animationDelay = `${index * 0.1}s`; card.dataset.appId = app.id;
+        const card = document.createElement("article"); card.className = "app-card"; card.style.animationDelay = `${Math.min(index, 8) * 0.06}s`; /* ANTI_FLICKER ①: chặn stagger, 36 app không phải đợi 3.6s */ card.dataset.appId = app.id;
         card.innerHTML = `<div class="app-icon-box"><img src="${app.icon || 'https://via.placeholder.com/150'}" class="app-icon" loading="lazy" decode="async" alt="${app.name}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(app.name)}&background=059669&color=fff'"></div>
           <div class="badge-row"><span class="badge ${isIOS ? 'ios' : 'android'}"><i data-lucide="${isIOS ? 'apple' : 'smartphone'}"></i>${app.platform || 'Android'}</span><span class="ads-badge" data-ads="loading" style="display:none"></span><span class="health-badge" data-health="loading" style="display:none"></span></div>
           <h2 class="app-title">${app.name}</h2><p class="app-desc">${app.description || ''}</p>
@@ -1791,10 +1795,12 @@
     });
     // FIX vong lap vo han (trang trang): chi createIcons khi THUC them nut, va
     // ngat observer luc createIcons de mutation cua no khong tu kich lai injectButtons.
-    if(added && window.lucide&&lucide.createIcons){ if(mo)mo.disconnect(); try{lucide.createIcons();}catch(_){}; if(mo)mo.observe(document.body,{childList:true,subtree:true}); }
+    if(added && window.lucide&&lucide.createIcons){ if(mo)mo.disconnect(); try{lucide.createIcons();}catch(_){}; if(mo)/* ANTI_FLICKER ③: chỉ theo dõi #appContainer, không phải cả body — trước đây mọi badge/mô tả đổ về đều kích hoạt lại injectButtons + lucide.createIcons() toàn trang. */
+  mo.observe(document.getElementById("appContainer")||document.body,{childList:true,subtree:true}); }
   }
   mo=new MutationObserver(function(){ if(mo._t)return; mo._t=setTimeout(function(){mo._t=null;injectButtons(document);},200); });
-  mo.observe(document.body,{childList:true,subtree:true});
+  /* ANTI_FLICKER ③: chỉ theo dõi #appContainer, không phải cả body — trước đây mọi badge/mô tả đổ về đều kích hoạt lại injectButtons + lucide.createIcons() toàn trang. */
+  mo.observe(document.getElementById("appContainer")||document.body,{childList:true,subtree:true});
   document.addEventListener("DOMContentLoaded",function(){injectButtons(document);});
   injectButtons(document);
 })();</script>
