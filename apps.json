@@ -153,7 +153,7 @@
         "aab": "https://github.com/conmangangqua/demo_app/releases/download/aab/zentide_sleep_tracker.aab"
       },
       "versions": {
-        "dev": "1.2.0+50",
+        "dev": "1.2.1+26072901",
         "prod": "1.2.0+50",
         "aab": "1.2.1+26072901"
       },
