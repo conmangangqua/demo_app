@@ -1,0 +1,38 @@
+{
+ "aegis_vpn": {
+  "en": "Fast, secure VPN with one-tap global servers and private encrypted browsing",
+  "vi": "VPN nhanh, an toàn với máy chủ toàn cầu một chạm và duyệt web được mã hóa riêng tư"
+ },
+ "beat_maker": {
+  "en": "Beat maker with 16 drum pads, step sequencer, piano and beat lessons.",
+  "vi": "Trình tạo nhịp với 16 miếng đệm trống, trình sắp xếp bước, piano và các bài học đánh nhịp."
+ },
+ "cyan_remote_tv": {
+  "en": "TV remote to control smart TVs, cast photos, videos and mirror your screen.",
+  "vi": "Điều khiển từ xa của TV để điều khiển TV thông minh, truyền ảnh, video và phản chiếu màn hình của bạn."
+ },
+ "emu_game": {
+  "en": "Retro emulator for your files",
+  "vi": "Trình giả lập retro cho các tập tin của bạn"
+ },
+ "geosnap": {
+  "en": "GPS photo stamp camera with live location, address, map & timestamp",
+  "vi": "Máy ảnh tem ảnh GPS với vị trí, địa chỉ, bản đồ và dấu thời gian trực tiếp"
+ },
+ "moo_insect_filter": {
+  "en": "Insect filter effects to transform selfies into buggy fun photos.",
+  "vi": "Hiệu ứng lọc côn trùng để biến những bức ảnh selfie thành những bức ảnh vui nhộn."
+ },
+ "restorex": {
+  "en": "Photo recovery to scan storage and restore recoverable images and files fast",
+  "vi": "Phục hồi ảnh để quét bộ nhớ và khôi phục nhanh các hình ảnh và tệp có thể phục hồi"
+ },
+ "voicepal": {
+  "en": "Caller name announcer + SMS reader that speaks names, texts and alerts aloud.",
+  "vi": "Người thông báo tên người gọi + trình đọc SMS nói to tên, văn bản và cảnh báo."
+ },
+ "zentide_sleep_tracker": {
+  "en": "Sleep tracker with calming sounds to help you wind down and rest better.",
+  "vi": "Trình theo dõi giấc ngủ với âm thanh êm dịu giúp bạn thư giãn và nghỉ ngơi tốt hơn."
+ }
+}
