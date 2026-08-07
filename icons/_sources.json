@@ -27,10 +27,6 @@
     "sha": "d59ade22a9a8af72f09a4ed46f5f154ec4fb65b04c21bd1323571cd501610d0c",
     "src": "https://github.com/conmangangqua/demo_app/releases/download/prod/restorex_icon.png"
   },
-  "voicepal": {
-    "sha": "4ba7e04d3fb2739e8087bcd13f3834382ddf6bf3c366d4e91622830aba8879d1",
-    "src": "https://github.com/conmangangqua/demo_app/releases/download/prod/voicepal_icon.png"
-  },
   "zentide_sleep_tracker": {
     "sha": "1e544f0863616f4fcc8a54c43fec79381fcee158a449b3dc4bc446422926d137",
     "src": "https://github.com/conmangangqua/demo_app/releases/download/prod/zentide_sleep_tracker_icon.png"

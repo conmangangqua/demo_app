@@ -124,23 +124,6 @@
       "store": ""
     },
     {
-      "id": "voicepal",
-      "name": "Voicepal",
-      "icon": "icons/voicepal.webp",
-      "platform": "Android",
-      "description": "",
-      "features": [],
-      "downloads": {
-        "dev": "https://github.com/conmangangqua/demo_app/releases/download/dev/voicepal_dev.apk",
-        "prod": "https://github.com/conmangangqua/demo_app/releases/download/prod/voicepal_prod.apk"
-      },
-      "versions": {
-        "dev": "1.0.0+1",
-        "prod": "1.0.0+1"
-      },
-      "store": ""
-    },
-    {
       "id": "zentide_sleep_tracker",
       "name": "Zentide: Sleep Sound &Recorder",
       "icon": "icons/zentide_sleep_tracker.webp",
