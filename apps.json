@@ -20,7 +20,7 @@
     {
       "id": "beat_maker",
       "name": "Beat Maker Pro: Learn Drum Pad",
-      "icon": "icons/beat_maker.webp",
+      "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/beat_maker_icon.png",
       "platform": "Android",
       "description": "",
       "features": [],
@@ -37,7 +37,7 @@
     {
       "id": "cyan_remote_tv",
       "name": "Cyan Remote Tv",
-      "icon": "icons/cyan_remote_tv.webp",
+      "icon": "https://github.com/conmangangqua/demo_app/releases/download/prod/cyan_remote_tv_icon.png",
       "platform": "Android",
       "description": "",
       "features": [],
@@ -49,9 +49,7 @@
       },
       "versions": {
         "dev": "1.0.0+1",
-        "prod": "1.0.0+1",
-        "aab": "1.0.0+26072201",
-        "noads": "1.0.0+1"
+        "prod": "1.0.0+1"
       },
       "store": ""
     },
@@ -67,8 +65,7 @@
         "prod": "https://github.com/conmangangqua/demo_app/releases/download/prod/emu_game_prod.plist"
       },
       "versions": {
-        "dev": "1.0.0+1",
-        "prod": "1.0.0+1"
+        "dev": "1.0.0+1"
       },
       "store": ""
     },
