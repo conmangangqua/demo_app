@@ -124,6 +124,21 @@
       "store": ""
     },
     {
+      "id": "wise_spend",
+      "name": "Wise Spend",
+      "icon": "icons/wise_spend.webp",
+      "platform": "Android",
+      "description": "",
+      "features": [],
+      "downloads": {
+        "dev": "https://github.com/conmangangqua/demo_app/releases/download/dev/wise_spend_dev.apk"
+      },
+      "versions": {
+        "dev": "1.0.0+26070701"
+      },
+      "store": ""
+    },
+    {
       "id": "zentide_sleep_tracker",
       "name": "Zentide: Sleep Sound &Recorder",
       "icon": "icons/zentide_sleep_tracker.webp",

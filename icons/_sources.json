@@ -30,5 +30,9 @@
   "zentide_sleep_tracker": {
     "sha": "1e544f0863616f4fcc8a54c43fec79381fcee158a449b3dc4bc446422926d137",
     "src": "https://github.com/conmangangqua/demo_app/releases/download/prod/zentide_sleep_tracker_icon.png"
+  },
+  "wise_spend": {
+    "sha": "7bed73e42346fbb2ad7eed1f76032df4d303a64f7a8522b2c6ed83d121113fda",
+    "src": "https://github.com/conmangangqua/demo_app/releases/download/dev/wise_spend_icon.png"
   }
 }
